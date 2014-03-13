@@ -1,0 +1,43 @@
+package Test
+import StatHandler
+import TestUtils
+
+UnitBaseStatBuffer unitBaseStats
+UnitStatBuffer unitStats
+StatList dmg1
+StatList dmg2
+StatList dmg
+StatList arm
+StatList eva
+
+init
+	unitBaseStats = new UnitBaseStatBuffer('hfoo')
+//		..set(Stat.DAMAGE, 10)
+//		..set(Stat.DAMAGE_PERC, 50)
+//		..set(Stat.EVASION, 10)
+	unitStats = new UnitStatBuffer(null, unitBaseStats)
+	
+	dmg1 = new StatList()..add(Stat.DAMAGE, 4)
+	dmg2 = new StatList()..add(Stat.DAMAGE_PERC, 50)
+	dmg = new StatList()..add(Stat.DAMAGE, 10)..add(Stat.DAMAGE_PERC, 20)
+	arm = new StatList()..add(Stat.ARMOR, 2)
+	eva = new StatList()..add(Stat.EVASION, 10)
+	
+	escEvent(() -> begin
+		print("Damage: " + unitStats.get(Stat.DAMAGE).toString())
+		print("Damage Perc: " + unitStats.get(Stat.DAMAGE_PERC).toString())
+		print("Armor: " + unitStats.get(Stat.ARMOR).toString())
+		print("Evasion: " + unitStats.get(Stat.EVASION).toString())
+		print("---")
+	end)
+	chatEvent("-add dmg1", () -> unitStats.apply(dmg1))
+	chatEvent("-remove dmg1", () -> unitStats.remove(dmg1))
+	chatEvent("-add dmg2", () -> unitStats.apply(dmg2))
+	chatEvent("-remove dmg2", () -> unitStats.remove(dmg2))
+	chatEvent("-add dmg", () -> unitStats.apply(dmg))
+	chatEvent("-remove dmg", () -> unitStats.remove(dmg))
+	chatEvent("-add arm", () -> unitStats.apply(arm))
+	chatEvent("-remove arm", () -> unitStats.remove(arm))
+	chatEvent("-add eva", () -> unitStats.apply(eva))
+	chatEvent("-remove eva", () -> unitStats.remove(eva))
+	print("Init finished.")

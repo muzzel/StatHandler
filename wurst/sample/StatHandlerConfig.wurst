@@ -1,0 +1,34 @@
+package StatHandlerConfig
+import StatHandler
+
+/**
+ * Make this function return a unique index if you want to use the unit extension functions.
+ * You can also comment it out and "import public" a package which provides this function.
+ */
+public function getUnitIndex(unit u) returns int
+	return 0
+
+/** List your stats here. */
+public enum Stat
+	DAMAGE
+	DAMAGE_PERC
+	ARMOR
+	EVASION
+
+/**
+ * Register all your stats here. Available functions:
+ * - Linear stat:
+ *		registerStatLin(Stat stat)
+ * - Exponential stat:
+ *		registerStatExp(Stat stat)
+ * - Logistic stat:
+ *		registerStatLog(Stat stat)
+ * - Linear stat with linear substat:
+ *		registerStatLinLin(Stat stat, Stat substat)
+ * - Linear stat with exponential substat:
+ *		registerStatLinExp(Stat stat, Stat substat)
+ */
+public function statRegistry()
+	registerStatLinLin(Stat.DAMAGE, Stat.DAMAGE_PERC, (unit u, Stat s) -> print("Stat changed: Damage (" + u.getName() + ")"))
+	registerStatLin(Stat.ARMOR, (unit u, Stat s) -> print("Stat changed: Armor (" + u.getName() + ")"))
+	registerStatLog(Stat.EVASION, (unit u, Stat s) -> print("Stat changed: Evasion (" + u.getName() + ")"))
